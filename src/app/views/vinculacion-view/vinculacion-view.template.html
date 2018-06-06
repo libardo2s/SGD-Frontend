@@ -1,0 +1,119 @@
+<div class="wrapper wrapper-content animated fadeInRight" style="padding: 0px">
+    <div class="row">
+        <div class="col-lg-12" style="margin-bottom: 10px;">
+            <div class="col-lg-9 text-title">
+                <h3>VINCULACIÓN</h3>
+            </div>
+            <div class="col-lg-3">
+                <button 
+                style="font-weight:bold;width: 100%;padding-top: 7px;padding-bottom: 7px;"
+                type="button" class="btn btn-primary btn-round" 
+                (click)="modalGenerarVinculacion.open()">
+                    <i class="fa fa-plus"></i>
+                    Nueva Vinculación
+                </button>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="card-container" style="margin-right:15px;margin-left: 15px;">
+                <div class="header">
+                    <div class="col-lg-12" style="padding-right:0px;padding-left: 0px;margin-bottom: 10px;">
+                        <div class="col-lg-9" style="padding-right:0px;padding-left: 0px;">
+                            <h4 class="title" style="color: #000000;">Lista vinculaciones</h4>
+                        </div>
+                        <div class="col-lg-3" style="padding-right:0px;padding-left: 0px;">
+                            <!--
+                            <div class="input-group" style="width: 100%;">
+                                <input [(ngModel)]="query" type="text" class="form-control" placeholder="Buscar" />
+                                <span class="input-group-btn"> 
+                                    <button type="button" class="btn btn-primary">
+                                        <i class="fa fa-search"></i>
+                                    </button> 
+                                </span>
+                            </div>
+                            -->
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="lista_vinculaciones.length !== 0 else elseBlock" style="font-size:12px;">
+
+                </div>
+                <ng-template #elseBlock>
+                    <div class="header text-center">
+                            <div class="circle" style="margin: auto;">
+                                <div class="clipboard-img-bg" style="margin: auto;margin-top: auto"></div>
+                            </div>
+                            <h3 style="color: #000000;">Ningún vehículo se encuentra vinculado, Desea Vincular un vehiculo ?</h3>
+                            <button 
+                                style="font-weight: bold;" type="button" class="btn btn-primary btn-round" 
+                                (click)="modalGenerarVinculacion.open()">
+                                    <i class="fa fa-plus"></i>
+                                    Nueva Vinculación
+                            </button>
+                        </div>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+    <bs-modal #modalNuevaVinculacion [keyboard]="false" [backdrop]="'static'">
+        <form #formVinculacion="ngForm" (ngSubmit)="onSubmitRegisterVinculacion(formVinculacion)">
+            <bs-modal-header [showDismiss]="true">
+                    <h4 class="modal-title" style="color: #000000;">Nueva Vinculación</h4>
+            </bs-modal-header>
+            <bs-modal-body>
+                <image-upload url="https://httpbin.org/status/200"></image-upload>
+            </bs-modal-body>
+        </form>
+    </bs-modal>
+    <bs-modal #modalGenerarVinculacion [keyboard]="false" [backdrop]="'static'">
+        <bs-modal-header [showDismiss]="true">
+            <h4 class="modal-title" style="color: #000000;">Vinculación</h4>
+        </bs-modal-header>
+        <bs-modal-body style="background: #f3f3f4">
+            <div class="row">
+                <div class="col-lg-12 card-container">
+                    <label for="placa" style="color: #000000">Placa</label>
+                    <div class="input-group" style="width: 50%;">
+                        <input type="text" [(ngModel)]="placa" class="form-control" placeholder="Ingrese placa del Vehículo" uppercase/>
+                        <span class="input-group-btn"> 
+                            <button type="button" class="btn btn-primary" (click)="getVehiculo(placa)">
+                                <i class="fa fa-search"></i>
+                            </button> 
+                        </span>
+                    </div>
+                </div>
+                <div class="col-lg-12 card-container" style="margin-top: 10px;color: #000000;" *ngIf="shoInfo">
+                    <h3 style="text-align: center;">Información del Vehículo</h3>
+                    <div class="col-lg-12" style="font-size: 15px;">
+                        <div class="col-lg-3">
+                            <span>
+                                <strong>Placa</strong>
+                                <p>{{vehiculo.placa | uppercase}}</p>
+                            </span>
+                        </div>
+                        <div class="col-lg-4">
+                            <span>
+                                <strong>Documento</strong>
+                                <p>{{vehiculo.propietario.persona.numero_documento}}</p>
+                            </span>
+                        </div>
+                        <div class="col-lg-5">
+                            <span>
+                                <strong>Propietario</strong>
+                                <p>{{vehiculo.propietario.persona.nombres | uppercase}} {{vehiculo.propietario.persona.apellidos | uppercase}}</p>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </bs-modal-body>
+        <spinner-component [spinnerShow]="loader_vinculacion">
+            <div class="spinner-2">
+                <div class="double-bounce1"></div>
+                <div class="double-bounce2"></div>
+            </div>
+        </spinner-component>
+    </bs-modal>
+    <simple-notifications [options]="options" ></simple-notifications>
+</div>
+    

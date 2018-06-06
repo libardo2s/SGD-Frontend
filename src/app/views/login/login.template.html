@@ -1,0 +1,45 @@
+<div class="login-bg text-center animated fadeInDown">
+    <div class="login-box ">
+        <div class="login gray-bg-2" style="margin-top:10%;">
+            <div class="card">
+                <h1 class="logo-name text-shadow" style="color:rgb(255, 255, 255);padding-top: 30px;">SGD</h1>
+                <h3 class="text-shadow" style="color: rgb(245, 245, 245);margin-bottom: 40px;">Bienvenido a SGD Franja Fucsia </h3>
+                <div style="margin-left: 20px; margin-right: 20px;margin-bottom: 30px;">
+                    <form #formLogin="ngForm" (ngSubmit)="onSubmit(formLogin)" class="m-t">
+                        <div class="form-group">
+                            <input 
+                            type="text" 
+                            name="username" 
+                            class="form-control" 
+                            placeholder="Usuario" 
+                            required 
+                            ngModel
+                            #username="ngModel">
+                        </div>
+                        <div class="form-group">
+                            <input 
+                            type="password"
+                            name="password"
+                            class="form-control" 
+                            placeholder="Contraseña" 
+                            required
+                            ngModel
+                            #password="ngModel">
+                        </div>
+                        <button 
+                        type="submit" 
+                        class="btn btn-yellow full-width block m-b"
+                        [disabled]="!formLogin.valid"><strong>Ingresar</strong></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <spinner-component [spinnerShow]="loader">
+    <div class="spinner-2">
+        <div class="double-bounce1"></div>
+        <div class="double-bounce2"></div>
+    </div>
+    </spinner-component>
+    <simple-notifications></simple-notifications>
+</div>

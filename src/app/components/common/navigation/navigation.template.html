@@ -1,0 +1,46 @@
+
+<nav 
+    class="navbar-default navbar-static-side background-div-navegation navegation-shadow" 
+    role="navigation" 
+    style="height: 100%;">
+    <div class="sidebar-collapse background-navegation">
+        <ul class="nav metismenu" id="side-menu">
+            <li class="nav-header" style="padding: 10px 10px;background-color: transparent;">
+                <div class="dropdown profile-element">
+                    <div class="logo-text text-center">
+                        <h3 class="text-title">
+                            SISTEMA DE GESTIÓN DOCUMENTAL
+                        </h3>
+                    </div>
+                </div>
+                <div class="logo-element text-title" style="font-size:150%;">
+                    SGD
+                </div>
+            </li>
+            <li class="active">
+                <a href="javascript:;"><i class="fa fa-user" style="font-size: 16px;"></i> <span class="nav-label">Gestión Propietarios</span><span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse in" style="background: #ffffff;color: tomato">
+                    <li class="sub-menu">
+                        <a [routerLink]="['/propietario']">
+                            <span class="nav-label">Propietarios</span>
+                        </a>
+                    </li>
+                    <li class="sub-menu">
+                        <a [routerLink]="['/vehiculo']">
+                            <span class="nav-label">Vehículos</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li [ngClass]="{active: activeRoute('vinculacion')}">
+                <a [routerLink]="['/vinculacion']"><i class="fa fa-file-text" style="font-size: 16px;"></i> <span class="nav-label">Vinculación</span></a>
+            </li>
+            <li [ngClass]="{active: activeRoute('taxista')}">
+                <a [routerLink]="['/taxista']"><i class="fa fa-taxi" style="font-size: 16px;"></i> <span class="nav-label">Gestión Taxistas</span></a>
+            </li>
+            <li [ngClass]="{active: activeRoute('empleado')}">
+                <a [routerLink]="['/empleado']"><i class="fa fa-users" style="font-size: 16px;"></i> <span class="nav-label">Gestión Humana</span></a>
+            </li>
+        </ul>
+    </div>
+</nav>

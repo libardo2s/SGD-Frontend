@@ -1,0 +1,205 @@
+<div class="wrapper wrapper-content animated fadeInRight" style="padding: 0px">
+    <div class="row">
+        <div class="col-lg-12" style="margin-bottom: 10px;">
+            <div class="col-lg-9 text-title">
+                <h3>GESTIÓN VEHÍCULOS</h3>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="card-container" style="margin-right:15px;margin-left: 15px;">
+                <div class="header">
+                    <div class="col-lg-12" style="padding-right:0px;padding-left: 0px;margin-bottom: 10px;">
+                        <div class="col-lg-9" style="padding-right:0px;padding-left: 0px;">
+                            <h4 class="title" style="color: #000000;">Lista vehículos</h4>
+                        </div>
+                        <div class="col-lg-3" style="padding-right:0px;padding-left: 0px;">
+                            <div class="input-group" style="width: 100%;">
+                                <input [(ngModel)]="query" type="text" class="form-control" placeholder="Buscar" />
+                                <span class="input-group-btn"> 
+                                    <button type="button" class="btn btn-primary">
+                                        <i class="fa fa-search"></i>
+                                    </button> 
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                <div *ngIf="show_table else elseBlock" style="font-size:12px;">
+                    <table class="table">
+                        <thead style="color: #000000;">
+                            <tr>
+                                <th class="text-center">Propietario</th>
+                                <th class="text-center">Placa</th>
+                                <th class="text-center">Marca</th>
+                                <th class="text-center">Modelo</th>
+                                <th class="text-center">Color</th>
+                                <th class="text-center">Línea</th>
+                                <th class="text-center">Pasajeros</th>
+                                <th class="text-center">Licencia</th>
+                                <th class="text-center">Carroceria</th>
+                                <th class="text-center">Chasis</th>
+                                <th class="text-center">Motor</th>
+                                <th class="text-center">Cilindraje</th>
+                                <th class="text-center">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody style="color: #000000;">
+                            <tr *ngFor="let item of lista_vehiculos">
+                                <td class="text-center">{{item.propietario.persona.numero_documento}}</td>
+                                <td class="text-center">{{item.placa | uppercase}}</td>
+                                <td class="text-center">{{item.marca | uppercase}}</td>
+                                <td class="text-center">{{item.modelo | uppercase}}</td>
+                                <td class="text-center">{{item.color| uppercase}}</td>
+                                <td class="text-center">{{item.linea | uppercase}}</td>
+                                <td class="text-center">{{item.pasajeros}}</td>
+                                <td class="text-center">{{item.numero_licencia}}</td>
+                                <td class="text-center">{{item.carroceria | uppercase}}</td>
+                                <td class="text-center">{{item.chasis | uppercase}}</td>
+                                <td class="text-center">{{item.motor | uppercase}}</td>
+                                <td class="text-center">{{item.cilindraje}}</td>
+                                <td class="td-actions text-center">
+                                    <a href="javascript:;" (click)="openEditModal(item)" rel="tooltip" title="" class="btn btn-success btn-xs" data-original-title="Edit Profile">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                                    <a href="javascript:;" (click)="openDialogDelete(item.placa)" rel="tooltip" title="" class="btn btn-danger btn-xs" data-original-title="Remove">
+                                        <i class="fa fa-times"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <ng-template #elseBlock>
+                    <div class="header text-center">
+                        <div class="circle" style="margin: auto;">
+                            <div class="taxi-img-bg" style="margin: auto;margin-top: auto"></div>
+                        </div>
+                        <h3 style="color: #000000;">No hay vehículos registrados.</h3>
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+    <bs-modal #modalEditTaxi [keyboard]="false" [backdrop]="'static'">
+        <form [formGroup]="formUpdateVehiculo" (ngSubmit)="updateVeh(formUpdateVehiculo)">
+            <bs-modal-header [showDismiss]="true">
+                <h4 class="modal-title" style="color: #000000;">Actualizar información Vehículo</h4>
+            </bs-modal-header>
+            <bs-modal-body>
+                <div class="form-group col-lg-12">
+                    <label class="label-black" for="documento">Documento Propietario</label>
+                    <input
+                        type="text" 
+                        class="form-control"
+                        [formControl] = "formUpdateVehiculo.controls['propietario']"
+                        required>
+                </div>
+                <div class="form-group col-lg-4">
+                    <label class="label-black" for="placa">Placa</label>
+                    <input 
+                        type="text" 
+                        class="form-control"
+                        [formControl] = "formUpdateVehiculo.controls['placa']"
+                        required
+                        [maxlength]="6">
+                </div>
+                <div class="form-group col-lg-4">
+                    <label class="label-black" for="marca">Marca</label>
+                    <input 
+                        type="text" 
+                        class="form-control"
+                        [formControl] = "formUpdateVehiculo.controls['marca']"
+                        required
+                        [maxlength]="15"
+                        (keypress)="onlyText($event)">
+                </div>
+                <div class="form-group col-lg-4">
+                    <label class="label-black" for="modelo">Modelo</label>
+                    <input 
+                        type="text" 
+                        class="form-control"
+                        [formControl] = "formUpdateVehiculo.controls['modelo']"
+                        required
+                        [maxlength]="4"
+                        (keypress)="onlyNumbers($event)">
+                </div>
+                <div class="form-group col-lg-3">
+                    <label class="label-black" for="color">Color</label>
+                    <input 
+                        type="text" 
+                        class="form-control"
+                        [formControl] = "formUpdateVehiculo.controls['color']"
+                        required
+                        [maxlength]="10"
+                        (keypress)="onlyText($event)">
+                </div>
+                <div class="form-group col-lg-4">
+                    <label class="label-black" for="color">Línea</label>
+                    <input 
+                        type="text" 
+                        class="form-control"
+                        [formControl] = "formUpdateVehiculo.controls['linea']"
+                        required
+                        [maxlength]="10"
+                        (keypress)="onlyText($event)">
+                </div>
+                <div class="form-group col-lg-5">
+                    <label class="label-black" for="chasis">Chasis</label>
+                    <input 
+                        type="text" 
+                        class="form-control"
+                        [formControl] = "formUpdateVehiculo.controls['chasis']"
+                        required
+                        [maxlength]="20">
+                </div>
+                <div class="form-group col-lg-2">
+                    <label class="label-black" for="pasajeros">Pasajeros</label>
+                    <input 
+                        type="text" 
+                        class="form-control"
+                        [formControl] = "formUpdateVehiculo.controls['pasajeros']"
+                        required
+                        [maxlength]="2"
+                        (keypress)="onlyNumbers($event)">
+                </div>
+                <div class="form-group col-lg-5">
+                    <label class="label-black" for="carroceria">Carroceria</label>
+                    <input 
+                        type="text" 
+                        class="form-control"
+                        [formControl] = "formUpdateVehiculo.controls['carroceria']"
+                        required
+                        [maxlength]="20">
+                </div>
+                <div class="form-group col-lg-5">
+                    <label class="label-black" for="motor">Motor</label>
+                    <input 
+                        type="text" 
+                        class="form-control"
+                        [formControl] = "formUpdateVehiculo.controls['motor']"
+                        required
+                        [maxlength]="30">
+                </div>
+                <div class="form-group col-lg-5">
+                    <label class="label-black" for="cilindraje">Cilindraje</label>
+                    <input 
+                        type="text" 
+                        class="form-control"
+                        [formControl] = "formUpdateVehiculo.controls['cilindraje']"
+                        required
+                        [maxlength]="7">
+                </div>
+                <div class="form-group col-lg-5">
+                    <label class="label-black" for="licencia">Licencia</label>
+                    <input 
+                        type="text" 
+                        class="form-control"
+                        [formControl] = "formUpdateVehiculo.controls['numero_licencia']"
+                        required
+                        [maxlength]="20">
+                </div>
+                <button [ladda]="isLoading" type="submit" class="btn btn-primary" style="margin-left: 15px;" [disabled]="!formUpdateVehiculo.valid">Actualizar</button>
+            </bs-modal-body>
+            </form>
+    </bs-modal>
+    <simple-notifications [options]="options" ></simple-notifications>
+</div>

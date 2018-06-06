@@ -1,0 +1,26 @@
+<div class="row">
+    <nav class="navbar navbar-static-top white-bg nav-shadow" role="navigation" >
+        <div class="navbar-header">
+            <a class="minimalize-styl-2 btn btn-toogle" (click)="toggleNavigation()"><i class="fa fa-bars"></i> </a>
+        </div>
+        <ul class="nav navbar-top-links navbar-right">
+            <li class="dropdown" >
+                <a 
+                    class="dropdown-toggle count-info"
+                    data-toggle="dropdown" 
+                    href="#" 
+                    aria-expanded="false"
+                    style="color: #000000;">
+                    <i class="fa fa-user"></i>
+                    {{username_text}}
+                </a>
+                <ul class="dropdown-menu">
+                    <li style="color: #000000;">
+                        <a href="#"><i class="fa fa-sign-out"></i> Salir</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+
+    </nav>
+</div>
