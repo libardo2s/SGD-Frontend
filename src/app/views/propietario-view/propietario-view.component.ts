@@ -259,7 +259,7 @@ export class propietarioViewComponent implements OnInit {
             cancelButtonText: 'Cancelar',
         }).then((result) => {
             if (result.value) {
-                this.request.get('/api/propietario/eliminar/'+documento+'/')
+                this.request.delete('/api/propietario/'+documento+'/')
                 .subscribe(result=>{
                     if(result.isOk) {
                         let index = this.lista_propietarios.findIndex(x=>x.persona.numero_documento===documento);

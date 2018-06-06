@@ -7,6 +7,7 @@ import { SimpleNotificationsModule } from "angular2-notifications";
 import { LaddaModule } from 'angular2-ladda';
 import { ImageUploadModule } from "angular2-image-upload";
 import { SpinnerComponentModule } from 'ng2-component-spinner';
+import { NgxPaginationModule } from 'ngx-pagination'; // <-- import the module
 
 @NgModule({
     declarations: [vinculacionViewComponent],
@@ -18,6 +19,7 @@ import { SpinnerComponentModule } from 'ng2-component-spinner';
         LaddaModule,
         ImageUploadModule,
         SpinnerComponentModule,
+        NgxPaginationModule,
     ],
 })
 

@@ -61,16 +61,16 @@
                                 <td class="text-center">{{item.persona.telefono}}</td>
                                 <td class="text-center">{{item.vial}}</td>
                                 <td class="text-center">
-                                    <a href="javascript:;" (click)="showTaxis(item.persona.numero_documento, item.persona.nombres, item.persona.apellidos)"><strong>{{item.taxis}}</strong></a>
+                                    <a href="javascript:;" title="Lista vehículos" (click)="showTaxis(item.persona.numero_documento, item.persona.nombres, item.persona.apellidos)"><strong>{{item.taxis}}</strong></a>
                                 </td>
                                 <td class="td-actions text-center">
-                                    <a href="javascript:;" (click)="showAddTaxi(item.id, item.persona.numero_documento)" rel="tooltip" title="" class="btn btn-success btn-xs" data-original-title="View Profile">
+                                    <a href="javascript:;" (click)="showAddTaxi(item.id, item.persona.numero_documento)" rel="tooltip" title="Asociar vehículo" class="btn btn-success btn-xs" data-original-title="View Profile">
                                         <i class="fa fa-plus"></i>
                                     </a>
-                                    <a href="javascript:;" (click)="showEditPropietario(item)" rel="tooltip" title="" class="btn btn-success btn-xs" data-original-title="Edit Profile">
+                                    <a href="javascript:;" (click)="showEditPropietario(item)" rel="tooltip" title="Actualizar información" class="btn btn-success btn-xs" data-original-title="Edit Profile">
                                         <i class="fa fa-edit"></i>
                                     </a>
-                                    <a href="javascript:;" (click)="openDialogDelete(item.persona.numero_documento)" rel="tooltip" title="" class="btn btn-danger btn-xs" data-original-title="Remove">
+                                    <a href="javascript:;" (click)="openDialogDelete(item.persona.numero_documento)" rel="tooltip" title="Eliminar" class="btn btn-danger btn-xs" data-original-title="Remove">
                                         <i class="fa fa-times"></i>
                                     </a>
                                 </td>
