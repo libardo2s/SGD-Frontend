@@ -1898,7 +1898,7 @@ div.dt-button-info {
 .form-control:focus,
 .single-line:focus {
   /* border-color: #1ab394; */
-  border-color: #CCB714;
+  border-color: #f2ff00;
 }
 .has-success .form-control,
 .has-success .form-control:focus {
@@ -8399,6 +8399,17 @@ body.md-skin {
 
 .rose-bg {
   background: rgb(255, 105, 180);
+}
+
+.logo-bg {
+  /*background: rgb(255, 105, 180); */
+  background-image: url("patterns/ff.png");
+  background-size: cover;
+  width: 200px;
+  height: 200px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: -40px;
 }
 
 .login-bg {

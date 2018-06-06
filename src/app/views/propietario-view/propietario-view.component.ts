@@ -16,6 +16,7 @@ import { Router } from '@angular/router';
 
 export class propietarioViewComponent implements OnInit {
 
+    p: number = 1;
     lista_propietarios = [];
     lista_propietarios_copia = [];
     lista_departamentos = [];

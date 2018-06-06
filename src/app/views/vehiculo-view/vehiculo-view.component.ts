@@ -16,6 +16,7 @@ import { Router } from '@angular/router';
 })
 export class vehiculoViewComponent implements OnInit {
 
+    p: number = 1;
     lista_vehiculos = [];
     show_table = false;
     isLoading: boolean;

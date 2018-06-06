@@ -6,6 +6,7 @@ import { SimpleNotificationsModule } from "angular2-notifications";
 import { LaddaModule } from 'angular2-ladda';
 import { SearchFilterPipe } from "../../service/search.service";
 import { vehiculoViewComponent } from "./vehiculo-view.component";
+import { NgxPaginationModule } from 'ngx-pagination'; // <-- import the module
 
 @NgModule({
     declarations: [vehiculoViewComponent],
@@ -16,6 +17,7 @@ import { vehiculoViewComponent } from "./vehiculo-view.component";
         ReactiveFormsModule,
         SimpleNotificationsModule,
         LaddaModule,
+        NgxPaginationModule
     ],
 })
 

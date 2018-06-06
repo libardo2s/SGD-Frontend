@@ -43,7 +43,7 @@
                             </tr>
                         </thead>
                         <tbody style="color: #000000;">
-                            <tr *ngFor="let item of lista_vehiculos">
+                            <tr *ngFor="let item of lista_vehiculos | paginate: { itemsPerPage: 10, currentPage: p }">
                                 <td class="text-center">{{item.propietario.persona.numero_documento}}</td>
                                 <td class="text-center">{{item.placa | uppercase}}</td>
                                 <td class="text-center">{{item.marca | uppercase}}</td>
@@ -67,6 +67,7 @@
                             </tr>
                         </tbody>
                     </table>
+                    <pagination-controls (pageChange)="p = $event" previousLabel="Previous" nextLabel="Next"></pagination-controls>
                 </div>
                 <ng-template #elseBlock>
                     <div class="header text-center">
