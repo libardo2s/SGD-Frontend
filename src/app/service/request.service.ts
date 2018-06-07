@@ -35,6 +35,12 @@ export class RequestService {
         .catch((error: any) => Observable.throw(error || 'Server error'));
     }
 
+    put(url: string): Observable<ResponseRequest> {
+        return this.http.put(this.baseUrl + url, this.options)
+        .map((res : Response) => <ResponseRequest> res.json())
+        .catch((error: any) => Observable.throw(error || 'Server error'));
+    }
+
     delete(url: string): Observable<ResponseRequest> {
         return this.http.delete(this.baseUrl + url, this.options)
         .map((res : Response) => <ResponseRequest> res.json())

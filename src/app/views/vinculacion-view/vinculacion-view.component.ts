@@ -6,6 +6,8 @@ import { URLS } from '../../app.base.url';
 import { BsModalComponent } from 'ng2-bs3-modal';
 import { ImageService } from 'angular2-image-upload/lib/image-upload/image.service';
 import Swal from 'sweetalert2';
+import { RequestOptions, Headers } from '@angular/http';
+import { UploadMetadata } from 'angular2-image-upload';
 
 @Component({
     selector: 'vinculacionView',
@@ -22,10 +24,25 @@ export class vinculacionViewComponent implements OnInit {
     loader_vinculacion: boolean;
     shoInfo: boolean;
     vehiculo: any;
+    title: string;
+    url: string;
+    inputFileActive: number;
+    private headers: Headers;
 
-    options = {
+    optionsNotifications = {
         position: ['top', 'rigth'],
         lastOnBottom: true
+    }
+
+    soat_fecha: any;
+
+    vinculacion_data = {
+        soat_fecha: Date,
+        tecno_fecha: Date,
+        targeta_operacion_fecha: Date,
+        seguro_fecha: Date,
+        seguro_contra_fecha: Date,
+        seguro_extra_fecha: Date
     }
 
     //MODALS
@@ -40,7 +57,11 @@ export class vinculacionViewComponent implements OnInit {
         private request: RequestService,
         private serviceNotification: NotificationsService,
         private router: Router
-    ){}
+    ){
+        this.url = URLS.debug;
+        this.headers = new Headers();
+        this.headers.append('Authorization', 'JWT '+URLS.getToken());
+    }
     
     ngOnInit(): void {
         if(URLS.getToken() === null){
@@ -107,8 +128,6 @@ export class vinculacionViewComponent implements OnInit {
         });
     }
 
-    onSubmitRegisterVinculacion(form) {}
-
     generateVinculacion(vehiculo){
         this.loader_vinculacion = true;
         // console.log(vehiculo);
@@ -156,5 +175,24 @@ export class vinculacionViewComponent implements OnInit {
                 });
             }
         })
+    }
+
+    openModalDocumentosVinculacion(placa, id) {
+        this.title = placa;
+        this.modalVinculacionDocumentos.open('lg');
+    }
+
+    onBeforeUploadSoat(metadata: UploadMetadata){
+        let data = {
+            type: 0,
+            date: this.vinculacion_data.soat_fecha
+        }
+        console.log(data);
+        metadata.formData = data;
+        return metadata;
+    }
+
+    onUploadFinished(event) {
+        // console.log(event);
     }
 }

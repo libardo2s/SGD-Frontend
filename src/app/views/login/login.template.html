@@ -1,54 +1,54 @@
 <div class="login-bg">
     <div class="loginColumns animated fadeInDown">
-            <div class="row">
-                <div class="col-md-6 text-center" style="color: #ffffff;">
-                    <h3 class="font-bold">SISTEMA DE GESTIÓN DOCUMENTAL </h3>
-                    <h3 class="font-bold">FRANJA FUCSIA </h3>
-                    <div class="logo-bg"></div>
-                </div>
-                <div class="col-md-6">
-                    <div class="ibox-content" style="border-radius: 5px;">
-                        <form #formLogin="ngForm" (ngSubmit)="onSubmit(formLogin)" class="m-t">
-                                <div class="form-group">
-                                    <input 
-                                    type="text" 
-                                    name="username" 
-                                    class="form-control" 
-                                    placeholder="Usuario" 
-                                    required 
-                                    ngModel
-                                    #username="ngModel">
-                                </div>
-                                <div class="form-group">
-                                    <input 
-                                    type="password"
-                                    name="password"
-                                    class="form-control" 
-                                    placeholder="Contraseña" 
-                                    required
-                                    ngModel
-                                    #password="ngModel">
-                                </div>
-                                <button 
-                                type="submit" 
-                                class="btn btn-primary full-width block m-b"
-                                [disabled]="!formLogin.valid"><strong>Ingresar</strong></button>
-                        </form>
-                        <p class="m-t">
-                            <small>Inspinia we app framework base on Bootstrap 3 © 2014</small>
-                        </p>
-                    </div>
+        <div class="row" style="margin-top: 150px;">
+            <div class="col-md-6 text-center" style="color: #ffffff;">
+                <h3 class="font-bold">SISTEMA DE GESTIÓN DOCUMENTAL </h3>
+                <h3 class="font-bold">FRANJA FUCSIA </h3>
+                <div class="logo-bg"></div>
+            </div>
+            <div class="col-md-6">
+                <div class="ibox-content" style="border-radius: 5px;">
+                    <form #formLogin="ngForm" (ngSubmit)="onSubmit(formLogin)" class="m-t">
+                            <div class="form-group">
+                                <input 
+                                type="text" 
+                                name="username" 
+                                class="form-control" 
+                                placeholder="Usuario" 
+                                required 
+                                ngModel
+                                #username="ngModel">
+                            </div>
+                            <div class="form-group">
+                                <input 
+                                type="password"
+                                name="password"
+                                class="form-control" 
+                                placeholder="Contraseña" 
+                                required
+                                ngModel
+                                #password="ngModel">
+                            </div>
+                            <button 
+                            type="submit" 
+                            class="btn btn-primary full-width block m-b"
+                            [disabled]="!formLogin.valid"><strong>Ingresar</strong></button>
+                    </form>
+                    <p class="m-t">
+                        <small>Inspinia we app framework base on Bootstrap 3 © 2014</small>
+                    </p>
                 </div>
             </div>
-            <hr>
-            <div class="row" style="color: #ffffff;">
-                <div class="col-md-6">
-                    Copyright Franja Fucsia
-                </div>
-                <div class="col-md-6 text-right">
-                    <small>© 2018</small>
-                </div>
+        </div>
+        <hr>
+        <div class="row" style="color: #ffffff;">
+            <div class="col-md-6">
+                Copyright Franja Fucsia
             </div>
+            <div class="col-md-6 text-right">
+                <small>© 2018</small>
+            </div>
+        </div>
     </div>
     <spinner-component [spinnerShow]="loader">
     <div class="spinner-2">
