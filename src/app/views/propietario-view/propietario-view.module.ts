@@ -5,8 +5,9 @@ import { propietarioViewComponent } from "./propietario-view.component";
 import { BsModalModule } from "ng2-bs3-modal";
 import { SimpleNotificationsModule } from "angular2-notifications";
 import { LaddaModule } from 'angular2-ladda';
-import { SearchFilterPipe } from "../../service/search.service";
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { NgxPaginationModule } from 'ngx-pagination'; // <-- import the module
+import { SearchFilterPipe } from "../../service/search.service";
 
 @NgModule({
     declarations: [propietarioViewComponent, SearchFilterPipe],

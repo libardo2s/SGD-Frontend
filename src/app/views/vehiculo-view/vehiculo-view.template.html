@@ -43,7 +43,7 @@
                             </tr>
                         </thead>
                         <tbody style="color: #000000;">
-                            <tr *ngFor="let item of lista_vehiculos | paginate: { itemsPerPage: 10, currentPage: p }">
+                            <tr *ngFor="let item of lista_vehiculos | paginate: { itemsPerPage: 10, currentPage: p } | filter: query">
                                 <td class="text-center">{{item.propietario.persona.numero_documento}}</td>
                                 <td class="text-center">{{item.placa | uppercase}}</td>
                                 <td class="text-center">{{item.marca | uppercase}}</td>

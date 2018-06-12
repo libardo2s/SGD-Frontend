@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { NotificationsService } from 'angular2-notifications';
 import { RequestService } from '../../service/request.service';
 import { Router } from '@angular/router';
@@ -8,11 +8,14 @@ import { ImageService } from 'angular2-image-upload/lib/image-upload/image.servi
 import Swal from 'sweetalert2';
 import { RequestOptions, Headers } from '@angular/http';
 import { UploadMetadata } from 'angular2-image-upload';
+import { DataService } from '../../service/data.service';
+
+declare var jQuery:any;
 
 @Component({
     selector: 'vinculacionView',
     templateUrl: 'vinculacion-view.template.html',
-    providers: [RequestService, ImageService]
+    providers: [RequestService, ImageService, DataService]
 })
 export class vinculacionViewComponent implements OnInit {
 
@@ -26,23 +29,22 @@ export class vinculacionViewComponent implements OnInit {
     vehiculo: any;
     title: string;
     url: string;
-    inputFileActive: number;
     private headers: Headers;
+    id_vinculacion: number;
+    type: number;
 
     optionsNotifications = {
         position: ['top', 'rigth'],
         lastOnBottom: true
     }
 
-    soat_fecha: any;
-
-    vinculacion_data = {
-        soat_fecha: Date,
-        tecno_fecha: Date,
-        targeta_operacion_fecha: Date,
-        seguro_fecha: Date,
-        seguro_contra_fecha: Date,
-        seguro_extra_fecha: Date
+    fechas_vencimientos = {
+        fecha_soat: '',
+        tecno_fecha: '',
+        targeta_operacion: '',
+        seguro_accidente: '',
+        seguro_contractual: '',
+        seguro_extracontractual: ''
     }
 
     //MODALS
@@ -56,7 +58,7 @@ export class vinculacionViewComponent implements OnInit {
     constructor(
         private request: RequestService,
         private serviceNotification: NotificationsService,
-        private router: Router
+        private router: Router,
     ){
         this.url = URLS.debug;
         this.headers = new Headers();
@@ -178,21 +180,108 @@ export class vinculacionViewComponent implements OnInit {
     }
 
     openModalDocumentosVinculacion(placa, id) {
+        this.id_vinculacion = id;
         this.title = placa;
         this.modalVinculacionDocumentos.open('lg');
     }
 
-    onBeforeUploadSoat(metadata: UploadMetadata){
-        let data = {
-            type: 0,
-            date: this.vinculacion_data.soat_fecha
+    onBeforeUpload = (metadata: UploadMetadata) => {
+        let data;
+        switch(this.type){
+            case 0:
+                if(this.fechas_vencimientos.fecha_soat) {
+                    data = {
+                        fecha_vencimiento: this.fechas_vencimientos.fecha_soat,
+                        tipo: this.type, 
+                        id_vinculacion: this.id_vinculacion
+                    }
+                }else {
+                    metadata.abort = true;
+                    this.showAlertError('Ingrese fecha de vencimiento del SOAT');
+                }
+            break;
+            case 1:
+                if(this.fechas_vencimientos.tecno_fecha) {
+                    data = {
+                        fecha_vencimiento: this.fechas_vencimientos.tecno_fecha,
+                        tipo: this.type, 
+                        id_vinculacion: this.id_vinculacion
+                    }
+                }else {
+                    metadata.abort = true;
+                    this.showAlertError('Ingrese fecha de vencimiento Tecnomecánica');
+                }
+            break;
+            case 2:
+                if(this.fechas_vencimientos.targeta_operacion) {
+                    data = {
+                        fecha_vencimiento: this.fechas_vencimientos.targeta_operacion,
+                        tipo: this.type, 
+                        id_vinculacion: this.id_vinculacion
+                    }
+                }else {
+                    metadata.abort = true;
+                    this.showAlertError('Ingrese fecha de vencimiento de la targeta de operación');
+                }
+            break;
+            case 3:
+                if(this.fechas_vencimientos.seguro_accidente) {
+                    data = {
+                        fecha_vencimiento: this.fechas_vencimientos.seguro_accidente,
+                        tipo: this.type, 
+                        id_vinculacion: this.id_vinculacion
+                    }
+                }else {
+                    metadata.abort = true;
+                    this.showAlertError('Ingrese fecha del seguro de accidentes personales');
+                }
+            break;
+            case 4:
+                if(this.fechas_vencimientos.seguro_contractual) {
+                    data = {
+                        fecha_vencimiento: this.fechas_vencimientos.seguro_contractual,
+                        tipo: this.type, 
+                        id_vinculacion: this.id_vinculacion
+                    }
+                }else {
+                    metadata.abort = true;
+                    this.showAlertError('Ingrese fecha del seguro contractual');
+                }
+            break;
+            case 5:
+                if(this.fechas_vencimientos.seguro_extracontractual) {
+                    data = {
+                        fecha_vencimiento: this.fechas_vencimientos.seguro_extracontractual,
+                        tipo: this.type, 
+                        id_vinculacion: this.id_vinculacion
+                    }
+                }else {
+                    metadata.abort = true;
+                    this.showAlertError('Ingrese fecha del seguro extracontractual');
+                }
+            break;
+            default:
+                data = {
+                    fecha_vencimiento: '',
+                    tipo: this.type, 
+                    id_vinculacion: this.id_vinculacion
+                }
+            break;  
         }
-        console.log(data);
         metadata.formData = data;
         return metadata;
+    };
+
+    opcionSelect(type) {
+        this.type = type;
     }
 
-    onUploadFinished(event) {
-        // console.log(event);
-    }
+    onUploadFinished = (data: any) => {
+        let response = JSON.parse(data.serverResponse.response._body);
+        if (response.isOk) {
+            this.showAlertSucces(response.message);
+        }else {
+            this.showAlertError(response.message);
+        }
+    };
 }

@@ -18,7 +18,6 @@ import { EmpleadoViewModule } from './views/empleado-view/empleado-view.modules'
 import { LoginModule } from "./views/login/login.module";
 import { VehiculoViewModule } from './views/vehiculo-view/vehiculo-view.module';
 
-
 @NgModule({
   declarations: [
     AppComponent

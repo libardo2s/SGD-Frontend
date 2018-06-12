@@ -4,9 +4,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BsModalModule } from "ng2-bs3-modal";
 import { SimpleNotificationsModule } from "angular2-notifications";
 import { LaddaModule } from 'angular2-ladda';
-import { SearchFilterPipe } from "../../service/search.service";
 import { vehiculoViewComponent } from "./vehiculo-view.component";
 import { NgxPaginationModule } from 'ngx-pagination'; // <-- import the module
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 @NgModule({
     declarations: [vehiculoViewComponent],
@@ -17,7 +17,8 @@ import { NgxPaginationModule } from 'ngx-pagination'; // <-- import the module
         ReactiveFormsModule,
         SimpleNotificationsModule,
         LaddaModule,
-        NgxPaginationModule
+        NgxPaginationModule,
+        Ng2SearchPipeModule
     ],
 })
 

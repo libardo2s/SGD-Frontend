@@ -8,7 +8,6 @@ import { LaddaModule } from 'angular2-ladda';
 import { ImageUploadModule } from "angular2-image-upload";
 import { SpinnerComponentModule } from 'ng2-component-spinner';
 import { NgxPaginationModule } from 'ngx-pagination'; // <-- import the module
-import { NgDatepickerModule } from 'ng2-datepicker';
 
 @NgModule({
     declarations: [vinculacionViewComponent],
@@ -21,7 +20,6 @@ import { NgDatepickerModule } from 'ng2-datepicker';
         ImageUploadModule,
         SpinnerComponentModule,
         NgxPaginationModule,
-        NgDatepickerModule,
     ],
 })
 

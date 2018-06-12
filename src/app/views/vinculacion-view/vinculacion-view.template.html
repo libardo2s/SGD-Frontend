@@ -22,7 +22,6 @@
                             <h4 class="title" style="color: #000000;">Lista vinculaciones</h4>
                         </div>
                         <div class="col-lg-3" style="padding-right:0px;padding-left: 0px;">
-                            <!--
                             <div class="input-group" style="width: 100%;">
                                 <input [(ngModel)]="query" type="text" class="form-control" placeholder="Buscar" />
                                 <span class="input-group-btn"> 
@@ -31,7 +30,6 @@
                                     </button> 
                                 </span>
                             </div>
-                            -->
                         </div>
                     </div>
                 </div>
@@ -96,101 +94,148 @@
             </bs-modal-header>
             <bs-modal-body>
                 <div class="row">
-                    <form>
+                    <form #formFechas="ngForm">
                         <div class="col-lg-12">
                             <div class="col-lg-4 form-group" style="color: #000000;">
                                 <label>SOAT</label>
-                                <input type="date" [(ngModel)]="soat_fecha" name="soat_fecha" class="form-control" style="margin-bottom: 5px;"/>
-                                <image-upload 
+                                <input type="date" [(ngModel)]="fechas_vencimientos.fecha_soat" id="fecha_soat" name="fecha_soat" class="form-control" style="margin-bottom: 5px;"/>
+                                <image-upload
                                     url="{{url}}/api/vinculacion/documento/"
                                     class="custom-image-upload"
                                     buttonCaption="Seleccionar imagen"
                                     clearButtonCaption="Eliminar"
                                     dropBoxMessage=" "
-                                    (uploadFinished)="onUploadFinished($event)"
                                     [extensions]="['jpg']"
                                     [headers]="headers"
                                     [maxFileSize]="1048576"
-                                    [beforeUpload]="onBeforeUploadSoat"></image-upload>
+                                    [beforeUpload]="onBeforeUpload"
+                                    (click)="opcionSelect(0)"
+                                    (uploadFinished)="onUploadFinished($event)"></image-upload>
                             </div>
                             <div class="col-lg-4 form-group" style="color: #000000;">
                                 <label>Tecnomecánica</label>
-                                <input type="date" [(ngModel)]="vinculacion_data.tecno_fecha" name="tecno_fecha" class="form-control" style="margin-bottom: 5px;"/>
-                                <image-upload 
+                                <input type="date" [(ngModel)]="fechas_vencimientos.tecno_fecha" name="tecno_fecha" class="form-control" style="margin-bottom: 5px;"/>
+                                <image-upload
                                     url="{{url}}/api/vinculacion/documento/"
                                     class="custom-image-upload"
                                     buttonCaption="Seleccionar imagen"
                                     clearButtonCaption="Eliminar"
                                     dropBoxMessage=" "
-                                    [headers]="headers"></image-upload>
+                                    [extensions]="['jpg']"
+                                    [headers]="headers"
+                                    [maxFileSize]="1048576"
+                                    [beforeUpload]="onBeforeUpload"
+                                    (click)="opcionSelect(1)"
+                                    (uploadFinished)="onUploadFinished($event)"></image-upload>
                             </div>
                             <div class="col-lg-4 form-group" style="color: #000000;">
                                 <label>Targeta Operación</label>
-                                <input type="date" [(ngModel)]="vinculacion_data.targeta_operacion_fecha" name="targeta_operacion_fecha" class="form-control" style="margin-bottom: 5px;"/>
-                                <image-upload 
-                                    url="https://httpbin.org/status/200"
+                                <input type="date" [(ngModel)]="fechas_vencimientos.targeta_operacion" name="targeta_operacion" class="form-control" style="margin-bottom: 5px;"/>
+                                <image-upload
+                                    url="{{url}}/api/vinculacion/documento/"
                                     class="custom-image-upload"
                                     buttonCaption="Seleccionar imagen"
-                                    dropBoxMessage=" "></image-upload>
+                                    clearButtonCaption="Eliminar"
+                                    dropBoxMessage=" "
+                                    [extensions]="['jpg']"
+                                    [headers]="headers"
+                                    [maxFileSize]="1048576"
+                                    [beforeUpload]="onBeforeUpload"
+                                    (click)="opcionSelect(2)"
+                                    (uploadFinished)="onUploadFinished($event)"></image-upload>
                             </div>
                             <div class="col-lg-4 form-group" style="color: #000000;">
                                     <label>Seguro Accidente</label>
-                                    <input type="date" [(ngModel)]="vinculacion_data.seguro_fecha" name="seguro_fecha" class="form-control" style="margin-bottom: 5px;"/>
-                                    <image-upload 
-                                        url="https://httpbin.org/status/200"
-                                        class="custom-image-upload"
-                                        buttonCaption="Seleccionar imagen"
-                                        dropBoxMessage=" "></image-upload>
+                                    <input type="date" [(ngModel)]="fechas_vencimientos.seguro_accidente" name="seguro_accidente" class="form-control" style="margin-bottom: 5px;"/>
+                                    <image-upload
+                                    url="{{url}}/api/vinculacion/documento/"
+                                    class="custom-image-upload"
+                                    buttonCaption="Seleccionar imagen"
+                                    clearButtonCaption="Eliminar"
+                                    dropBoxMessage=" "
+                                    [extensions]="['jpg']"
+                                    [headers]="headers"
+                                    [maxFileSize]="1048576"
+                                    [beforeUpload]="onBeforeUpload"
+                                    (click)="opcionSelect(3)"
+                                    (uploadFinished)="onUploadFinished($event)"></image-upload>
                             </div>
                             <div class="col-lg-4 form-group" style="color: #000000;">
                                 <label>Seguro Contractual</label>
-                                <input type="date" [(ngModel)]="vinculacion_data.seguro_contra_fecha" name="seguro_contra_fecha" class="form-control" style="margin-bottom: 5px;"/>
-                                <image-upload 
-                                    url="https://httpbin.org/status/200"
+                                <input type="date" [(ngModel)]="fechas_vencimientos.seguro_contractual" name="seguro_contractual" class="form-control" style="margin-bottom: 5px;"/>
+                                <image-upload
+                                    url="{{url}}/api/vinculacion/documento/"
                                     class="custom-image-upload"
                                     buttonCaption="Seleccionar imagen"
-                                    dropBoxMessage=" "></image-upload>
+                                    clearButtonCaption="Eliminar"
+                                    dropBoxMessage=" "
+                                    [extensions]="['jpg']"
+                                    [headers]="headers"
+                                    [maxFileSize]="1048576"
+                                    [beforeUpload]="onBeforeUpload"
+                                    (click)="opcionSelect(4)"
+                                    (uploadFinished)="onUploadFinished($event)"></image-upload>
                             </div>
                             <div class="col-lg-4 form-group" style="color: #000000;">
                                 <label>Seguro Extracontractual</label>
-                                <input type="date" [(ngModel)]="vinculacion_data.seguro_extra_fecha" name="seguro_extra_fecha" class="form-control" style="margin-bottom: 5px;"/>
-                                <image-upload 
-                                    url="https://httpbin.org/status/200"
+                                <input type="date" [(ngModel)]="fechas_vencimientos.seguro_extracontractual" name="seguro_extracontractual" class="form-control" style="margin-bottom: 5px;"/>
+                                <image-upload
+                                    url="{{url}}/api/vinculacion/documento/"
                                     class="custom-image-upload"
                                     buttonCaption="Seleccionar imagen"
-                                    dropBoxMessage=" "></image-upload>
-                            </div>
-                            <div class="col-lg-4 form-group" style="color: #000000;">
-                                <label>Targeta Operación</label>
-                                <image-upload 
-                                    url="https://httpbin.org/status/200"
-                                    class="custom-image-upload"
-                                    buttonCaption="Seleccionar imagen"
-                                    dropBoxMessage=" "></image-upload>
+                                    clearButtonCaption="Eliminar"
+                                    dropBoxMessage=" "
+                                    [extensions]="['jpg']"
+                                    [headers]="headers"
+                                    [maxFileSize]="1048576"
+                                    [beforeUpload]="onBeforeUpload"
+                                    (click)="opcionSelect(5)"
+                                    (uploadFinished)="onUploadFinished($event)"></image-upload>
                             </div>
                             <div class="col-lg-4 form-group" style="color: #000000;">
                                 <label>Revisión Preoperacional</label>
-                                <image-upload 
-                                    url="https://httpbin.org/status/200"
+                                <image-upload
+                                    url="{{url}}/api/vinculacion/documento/"
                                     class="custom-image-upload"
                                     buttonCaption="Seleccionar imagen"
-                                    dropBoxMessage=" "></image-upload>
+                                    clearButtonCaption="Eliminar"
+                                    dropBoxMessage=" "
+                                    [extensions]="['jpg']"
+                                    [headers]="headers"
+                                    [maxFileSize]="1048576"
+                                    [beforeUpload]="onBeforeUpload"
+                                    (click)="opcionSelect(6)"
+                                    (uploadFinished)="onUploadFinished($event)"></image-upload>
                             </div>
                             <div class="col-lg-4 form-group" style="color: #000000;">
                                 <label>RUT</label>
-                                <image-upload 
-                                    url="https://httpbin.org/status/200"
+                                <image-upload
+                                    url="{{url}}/api/vinculacion/documento/"
                                     class="custom-image-upload"
                                     buttonCaption="Seleccionar imagen"
-                                    dropBoxMessage=" "></image-upload>
+                                    clearButtonCaption="Eliminar"
+                                    dropBoxMessage=" "
+                                    [extensions]="['jpg']"
+                                    [headers]="headers"
+                                    [maxFileSize]="1048576"
+                                    [beforeUpload]="onBeforeUpload"
+                                    (click)="opcionSelect(7)"
+                                    (uploadFinished)="onUploadFinished($event)"></image-upload>
                             </div>
                             <div class="col-lg-4 form-group" style="color: #000000;">
                                 <label>Antecedentes</label>
-                                <image-upload 
-                                    url="https://httpbin.org/status/200"
+                                <image-upload
+                                    url="{{url}}/api/vinculacion/documento/"
                                     class="custom-image-upload"
                                     buttonCaption="Seleccionar imagen"
-                                    dropBoxMessage=" "></image-upload>
+                                    clearButtonCaption="Eliminar"
+                                    dropBoxMessage=" "
+                                    [extensions]="['jpg']"
+                                    [headers]="headers"
+                                    [maxFileSize]="1048576"
+                                    [beforeUpload]="onBeforeUpload"
+                                    (click)="opcionSelect(8)"
+                                    (uploadFinished)="onUploadFinished($event)"></image-upload>
                             </div>
                         </div>
                     </form>
