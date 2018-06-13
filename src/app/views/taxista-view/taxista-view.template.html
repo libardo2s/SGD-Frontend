@@ -1,15 +1,171 @@
-<div class="wrapper wrapper-content animated fadeInRight">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="text-center m-t-lg">
-                    <h1>
-                        Welcome in Inspinia Angular 2 Starter Project
-                    </h1>
-                    <small>
-                        Taxista
-                    </small>
+<div class="wrapper wrapper-content animated fadeInRight" style="padding: 0px">
+    <div class="row">
+        <div class="col-lg-12" style="margin-bottom: 10px;">
+                <div class="col-lg-9 text-title">
+                    <h3>GESTIÓN TAXISTA </h3>
+                </div>
+                <div class="col-lg-3">
+                    <button 
+                    style="font-weight:bold;width: 100%;padding-top: 7px;padding-bottom: 7px;"
+                    type="button" class="btn btn-primary btn-round" 
+                    (click)="modalTaxista.open()">
+                        <i class="fa fa-plus"></i>
+                        Agregar Taxista
+                    </button>
+                </div>
+            </div>
+        <div class="col-lg-12">
+            <div class="card-container" style="margin-right:15px;margin-left: 15px;">
+                <div class="header">
+                    <div class="col-lg-12" style="padding-right:0px;padding-left: 0px;margin-bottom: 10px;">
+                        <div class="col-lg-9" style="padding-right:0px;padding-left: 0px;">
+                            <h4 class="title" style="color: #000000;">Lista Taxistas</h4>
+                        </div>
+                        <div class="col-lg-3" style="padding-right:0px;padding-left: 0px;">
+                            <div class="input-group" style="width: 100%;">
+                                <input [(ngModel)]="query" type="text" class="form-control" placeholder="Buscar" />
+                                <span class="input-group-btn"> 
+                                    <button type="button" class="btn btn-primary">
+                                        <i class="fa fa-search"></i>
+                                    </button> 
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="lista_taxista.length !== 0 else elseBlock" style="font-size:12px;">
+
+                    </div>
+                    <ng-template #elseBlock>
+                        <div class="header text-center">
+                            <div class="circle" style="margin: auto;">
+                                <div class="drive-img-bg" style="margin: auto;margin-top: auto"></div>
+                            </div>
+                            <h3 style="color: #000000;">No hay taxistas registrados. Desea registrar uno nuevo ?</h3>
+                            <button style="font-weight: bold;" type="button" class="btn btn-primary btn-round" 
+                                    (click)="modalTaxista.open()">
+                                    <i class="fa fa-plus"></i>
+                                Agregar Taxista
+                            </button>
+                        </div>
+                    </ng-template>
                 </div>
             </div>
         </div>
     </div>
-    
+    <bs-modal #modalTaxista [keyboard]="false" [backdrop]="'static'">
+            <form #formEdit="ngForm" (ngSubmit)="onSubmitEdit(formEdit)">
+                    <bs-modal-header [showDismiss]="true">
+                        <h4 class="modal-title" style="color: #000000;">Registrar nuevo taxista</h4>
+                    </bs-modal-header>
+                    <bs-modal-body>
+                        <div class="form-group col-lg-12">
+                            <label class="label-black" for="documento">N° Documento</label>
+                            <input 
+                                type="text" 
+                                class="form-control"
+                                [(ngModel)]="documento_select"
+                                name="documento_select"
+                                required
+                                [maxlength]="10"
+                                (keypress)="onlyNumbers($event)">
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label class="label-black" for="nombres">Nombres</label>
+                            <input 
+                                type="text" 
+                                class="form-control" 
+                                [(ngModel)]="nombres_select"
+                                name="nombres_select"
+                                required
+                                [maxlength]="30"
+                                (keypress)="onlyText($event)">
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label class="label-black" for="apellidos">Apellidos</label>
+                            <input 
+                                type="text" 
+                                class="form-control" 
+                                [(ngModel)]="apellidos_select"
+                                name="apellidos_select"
+                                required
+                                [maxlength]="30"
+                                (keypress)="onlyText($event)">
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <label class="label-black" for="direccion">Dirección</label>
+                            <input 
+                                type="text"
+                                class="form-control"
+                                [(ngModel)]="direccion_select"
+                                name="direccion_select"
+                                required
+                                [maxlength]="15">
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <label class="label-black" for="Departamento">Departamento</label>
+                            <select 
+                                class="form-control" 
+                                [(ngModel)]="departamento_select"
+                                name="departamento_select"
+                                required
+                                (change)="onChange($event.target.value)">
+                                <option *ngFor="let dpt of lista_departamentos" value="{{dpt}}">{{dpt}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <label class="label-black" for="municipio">Municipio</label>
+                            <select 
+                                class="form-control" 
+                                [(ngModel)]="municipio_select"
+                                name="municipio_select"
+                                required>
+                                <option *ngFor="let mnp of lista_municipios" value="{{mnp}}">{{mnp}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <label class="label-black" for="Telefono">Telefono</label>
+                            <input 
+                                type="text"
+                                class="form-control"
+                                [(ngModel)]="telefono_select"
+                                name="telefono_select"
+                                required
+                                [maxlength]="10"
+                                (keypress)="onlyNumbers($event)">
+                        </div>
+                        <div class="form-group col-lg-4">
+                                <label class="label-black" for="Telefono">Celular</label>
+                                <input 
+                                    type="text"
+                                    class="form-control"
+                                    [(ngModel)]="telefono_select"
+                                    name="telefono_select"
+                                    required
+                                    [maxlength]="10"
+                                    (keypress)="onlyNumbers($event)">
+                            </div>
+                        <div class="form-group col-lg-4">
+                            <label class="label-black" for="Departamento">Fecha de Nacimiento</label>
+                            <input 
+                                type="date"
+                                class="form-control"
+                                [(ngModel)]="fecha_cumpleanos_select"
+                                name="fecha_cumpleanos_select"
+                                required>
+                        </div>
+                        <div class="form-group col-lg-3">
+                            <label class="label-black" for="vial">Tipo de sangre</label>
+                            <input 
+                                type="text" 
+                                class="form-control" 
+                                [(ngModel)]="vial_select"
+                                name="vial_select"
+                                required>
+                        </div>
+                        <br>
+                        <button [ladda]="isLoading" type="submit" class="btn btn-primary" [disabled]="!formEdit.valid" style="margin-left: 15px;">Registrar</button>
+                    </bs-modal-body>
+                </form>
+        </bs-modal>
+        <simple-notifications></simple-notifications>
+</div>

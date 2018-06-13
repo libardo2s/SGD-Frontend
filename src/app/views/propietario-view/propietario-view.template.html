@@ -32,400 +32,73 @@
                             </div>
                         </div>
                     </div>
-                <div *ngIf="show_table else elseBlock" style="font-size:12px;">
-                    <table class="table">
-                        <thead style="color: #000000;">
-                            <tr>
-                                <th class="text-center">Número Documento</th>
-                                <th class="text-center">Nombres</th>
-                                <th class="text-center">Apellidos</th>
-                                <th class="text-center">Fecha Nacimiento</th>
-                                <th class="text-center">Dirección</th>
-                                <th class="text-center">Municipio</th>
-                                <th class="text-center">Departamento</th>
-                                <th class="text-center">Telefono</th>
-                                <th class="text-center">Vial</th>
-                                <th class="text-center">N° Taxis</th>
-                                <th class="text-center">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody style="color: #000000;">
-                            <tr *ngFor="let item of lista_propietarios | paginate: { itemsPerPage: 10, currentPage: p } | searchfilter: query">
-                                <td class="text-center">{{item.persona.numero_documento}}</td>
-                                <td class="text-center">{{item.persona.nombres | uppercase}}</td>
-                                <td class="text-center">{{item.persona.apellidos | uppercase}}</td>
-                                <td class="text-center">{{item.fecha_cumpleanos}}</td>
-                                <td class="text-center">{{item.persona.direccion | uppercase}}</td>
-                                <td class="text-center">{{item.persona.municipio | uppercase}}</td>
-                                <td class="text-center">{{item.persona.departamento | uppercase}}</td>
-                                <td class="text-center">{{item.persona.telefono}}</td>
-                                <td class="text-center">{{item.vial}}</td>
-                                <td class="text-center">
-                                    <a href="javascript:;" title="Lista vehículos" (click)="showTaxis(item.persona.numero_documento, item.persona.nombres, item.persona.apellidos)"><strong>{{item.taxis}}</strong></a>
-                                </td>
-                                <td class="td-actions text-center">
-                                    <a href="javascript:;" (click)="showAddTaxi(item.id, item.persona.numero_documento)" rel="tooltip" title="Asociar vehículo" class="btn btn-success btn-xs" data-original-title="View Profile">
-                                        <i class="fa fa-plus"></i>
-                                    </a>
-                                    <a href="javascript:;" (click)="showEditPropietario(item)" rel="tooltip" title="Actualizar información" class="btn btn-success btn-xs" data-original-title="Edit Profile">
-                                        <i class="fa fa-edit"></i>
-                                    </a>
-                                    <a href="javascript:;" (click)="openDialogDelete(item.persona.numero_documento)" rel="tooltip" title="Eliminar" class="btn btn-danger btn-xs" data-original-title="Remove">
-                                        <i class="fa fa-times"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <pagination-controls (pageChange)="p = $event" previousLabel="Anterior" nextLabel="Siguiente"></pagination-controls>
-                </div>
-                <ng-template #elseBlock>
-                    <div class="header text-center">
-                        <div class="circle" style="margin: auto;">
-                            <div class="warning-img-bg" style="margin: auto;margin-top: auto"></div>
-                        </div>
-                        <h3 style="color: #000000;">No hay propietarios registrados. Desea registrar uno nuevo ?</h3>
-                        <button style="font-weight: bold;" type="button" class="btn btn-primary btn-round" 
-                                (click)="modalPropietario.open()">
-                                <i class="fa fa-plus"></i>
-                            Agregar Propietario
-                        </button>
-                    </div>
-                </ng-template>
-            </div>
-        </div>
-    </div>
-    <bs-modal #modalRegisterPropietario [keyboard]="false" [backdrop]="'static'">
-        <form #formRegister="ngForm" (ngSubmit)="onSubmitRegister(formRegister)">
-            <bs-modal-header [showDismiss]="true">
-                    <h4 class="modal-title" style="color: #000000;">Registrar Nuevo Propietario</h4>
-            </bs-modal-header>
-            <bs-modal-body>
-                <div class="form-group col-lg-12">
-                    <label class="label-black" for="documento">N° Documento</label>
-                    <input 
-                        type="text" 
-                        class="form-control"
-                        ngModel
-                        #documento="ngModel"
-                        name="documento" 
-                        id="documento" 
-                        required
-                        [maxlength]="10"
-                        (keypress)="onlyNumbers($event)">
-                </div>
-                <div class="form-group col-lg-6">
-                    <label class="label-black" for="nombres">Nombres</label>
-                    <input 
-                        type="text" 
-                        class="form-control" 
-                        ngModel
-                        #nombres="ngModel"
-                        name="nombres"
-                        id="nombres"
-                        required
-                        [maxlength]="30"
-                        (keypress)="onlyText($event)">
-                </div>
-                <div class="form-group col-lg-6">
-                    <label class="label-black" for="apellidos">Apellidos</label>
-                    <input 
-                        type="text" 
-                        class="form-control" 
-                        ngModel
-                        #apellidos="ngModel"
-                        name="apellidos" 
-                        id="apellidos"
-                        required
-                        [maxlength]="30"
-                        (keypress)="onlyText($event)">
-                </div>
-                <div class="form-group col-lg-4">
-                    <label class="label-black" for="direccion">Dirección</label>
-                    <input 
-                        type="text"
-                        class="form-control"
-                        ngModel
-                        #direccion="ngModel"
-                        name="direccion"
-                        id="direccion"
-                        required
-                        [maxlength]="15">
-                </div>
-                <div class="form-group col-lg-4">
-                    <label class="label-black" for="Departamento">Departamento</label>
-                    <select 
-                        class="form-control" 
-                        name="departamento"
-                        id="departamento"
-                        ngModel
-                        #departamento="ngModel"
-                        required
-                        (change)="onChange($event.target.value)">
-                        <option *ngFor="let dpt of lista_departamentos" value="{{dpt}}">{{dpt}}</option>
-                    </select>
-                </div>
-                <div class="form-group col-lg-4">
-                    <label class="label-black" for="municipio">Municipio</label>
-                    <select 
-                        class="form-control" 
-                        name="municipio"
-                        id="municipio"
-                        ngModel
-                        #municipio="ngModel"
-                        required>
-                        <option *ngFor="let mnp of lista_municipios" value="{{mnp}}">{{mnp}}</option>
-                    </select>
-                </div>
-                <div class="form-group col-lg-4">
-                    <label class="label-black" for="Telefono">Telefono</label>
-                    <input 
-                        type="text"
-                        class="form-control"
-                        ngModel
-                        #telefono="ngModel"
-                        name="telefono"
-                        id="telefono"
-                        required
-                        [maxlength]="10"
-                        (keypress)="onlyNumbers($event)">
-                </div>
-                <div class="form-group col-lg-4">
-                    <label class="label-black" for="Departamento">Fecha de Nacimiento</label>
-                    <input 
-                        type="date"
-                        class="form-control"
-                        ngModel
-                        #fechanacimiento="ngModel"
-                        name="fechanacimiento"
-                        id="fechanacimiento"
-                        required>
-                </div>
-                <div class="form-group col-lg-4">
-                    <label class="label-black" for="vial">Vial</label>
-                    <input 
-                        type="text" 
-                        class="form-control" 
-                        ngModel
-                        #vial="ngModel"
-                        name="vial" 
-                        id="vial"
-                        required>
-                </div>
-                <button [ladda]="isLoading" type="submit" class="btn btn-primary" style="margin-left: 15px;" [disabled]="!formRegister.valid">Registrar</button>
-            </bs-modal-body>
-        </form>
-    </bs-modal>
-    <bs-modal #modalListTaxis [keyboard]="false" [backdrop]="'static'">
-        <bs-modal-header [showDismiss]="true">
-            <h4 class="modal-title" style="color: #000000;">
-                {{str_propietario}} - TAXIS
-            </h4>
-        </bs-modal-header>
-        <bs-modal-body>
-            <div class="row">
-                <div *ngIf="lista_vehiculos_propietario.length !== 0 else elseBlock">
-                    <div class="col-lg-12">
+                    <div *ngIf="show_table else elseBlock" style="font-size:12px;">
                         <table class="table">
                             <thead style="color: #000000;">
                                 <tr>
-                                    <th class="text-center">Placa</th>
-                                    <th class="text-center">Marca</th>
-                                    <th class="text-center">Modelo</th>
-                                    <th class="text-center">Línea</th>
-                                    <th class="text-center">Color</th>
-                                    <th class="text-center">Pasajeros</th>
-                                    <th class="text-center">Carroceria</th>
-                                    <th class="text-center">Motor</th>
-                                    <th class="text-center">Licencia</th>
+                                    <th class="text-center">Número Documento</th>
+                                    <th class="text-center">Nombres</th>
+                                    <th class="text-center">Apellidos</th>
+                                    <th class="text-center">Fecha Nacimiento</th>
+                                    <th class="text-center">Dirección</th>
+                                    <th class="text-center">Municipio</th>
+                                    <th class="text-center">Departamento</th>
+                                    <th class="text-center">Telefono</th>
+                                    <th class="text-center">Vial</th>
+                                    <th class="text-center">N° Taxis</th>
+                                    <th class="text-center">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody style="color: #000000;">
-                                <tr *ngFor="let item of lista_vehiculos_propietario">
-                                    <td class="text-center">{{item.placa | uppercase}}</td>
-                                    <td class="text-center">{{item.marca | uppercase}}</td>
-                                    <td class="text-center">{{item.modelo}}</td>
-                                    <td class="text-center">{{item.linea | uppercase}}</td>
-                                    <td class="text-center">{{item.color | uppercase}}</td>
-                                    <td class="text-center">{{item.pasajeros}}</td>
-                                    <td class="text-center">{{item.carroceria | uppercase}}</td>
-                                    <td class="text-center">{{item.motor | uppercase}}</td>
-                                    <td class="text-center">{{item.numero_licencia | uppercase}}</td>
+                                <tr *ngFor="let item of lista_propietarios | paginate: { itemsPerPage: 10, currentPage: p } | searchfilter: query">
+                                    <td class="text-center">{{item.persona.numero_documento}}</td>
+                                    <td class="text-center">{{item.persona.nombres | uppercase}}</td>
+                                    <td class="text-center">{{item.persona.apellidos | uppercase}}</td>
+                                    <td class="text-center">{{item.fecha_cumpleanos}}</td>
+                                    <td class="text-center">{{item.persona.direccion | uppercase}}</td>
+                                    <td class="text-center">{{item.persona.municipio | uppercase}}</td>
+                                    <td class="text-center">{{item.persona.departamento | uppercase}}</td>
+                                    <td class="text-center">{{item.persona.telefono}}</td>
+                                    <td class="text-center">{{item.vial}}</td>
+                                    <td class="text-center">
+                                        <a href="javascript:;" title="Lista vehículos" (click)="showTaxis(item.persona.numero_documento, item.persona.nombres, item.persona.apellidos)"><strong>{{item.taxis}}</strong></a>
+                                    </td>
+                                    <td class="td-actions text-center">
+                                        <a href="javascript:;" (click)="showAddTaxi(item.id, item.persona.numero_documento)" rel="tooltip" title="Asociar vehículo" class="btn btn-success btn-xs" data-original-title="View Profile">
+                                            <i class="fa fa-plus"></i>
+                                        </a>
+                                        <a href="javascript:;" (click)="showEditPropietario(item)" rel="tooltip" title="Actualizar información" class="btn btn-success btn-xs" data-original-title="Edit Profile">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                        <a href="javascript:;" (click)="openDialogDelete(item.persona.numero_documento)" rel="tooltip" title="Eliminar" class="btn btn-danger btn-xs" data-original-title="Remove">
+                                            <i class="fa fa-times"></i>
+                                        </a>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
+                        <pagination-controls (pageChange)="p = $event" previousLabel="Anterior" nextLabel="Siguiente"></pagination-controls>
                     </div>
-                </div>
-                <ng-template #elseBlock>
-                    <div class="header text-center">
-                        <div class="circle" style="margin: auto;">
-                            <div class="taxi-img-bg" style="margin: auto;margin-top: auto"></div>
+                    <ng-template #elseBlock>
+                        <div class="header text-center">
+                            <div class="circle" style="margin: auto;">
+                                <div class="warning-img-bg" style="margin: auto;margin-top: auto"></div>
+                            </div>
+                            <h3 style="color: #000000;">No hay propietarios registrados. Desea registrar uno nuevo ?</h3>
+                            <button style="font-weight: bold;" type="button" class="btn btn-primary btn-round" 
+                                    (click)="modalPropietario.open()">
+                                    <i class="fa fa-plus"></i>
+                                Agregar Propietario
+                            </button>
                         </div>
-                        <h3 style="color: #000000;">{{str_propietario}}, no tiene taxis registrados</h3>
-                    </div>
-                </ng-template>
+                    </ng-template>
+                </div>
             </div>
-        </bs-modal-body>
-    </bs-modal>
-    <bs-modal #modalRegisterTaxi [keyboard]="false" [backdrop]="'static'">
-        <form #formRegisterTaxi="ngForm" (ngSubmit)="onSubmitRegisterTaxi(formRegisterTaxi)">
-            <bs-modal-header [showDismiss]="true">
-                <h4 class="modal-title" style="color: #000000;">Registar Nuevo Vehículo</h4>
-            </bs-modal-header>
-            <bs-modal-body>
-                <div class="form-group col-lg-12">
-                    <label class="label-black" for="documento">Documento Propietario</label>
-                    <input
-                        type="text" 
-                        class="form-control"
-                        value="{{documento_select}}"
-                        readonly>
-                </div>
-                <div class="form-group col-lg-4">
-                    <label class="label-black" for="placa">Placa</label>
-                    <input 
-                        type="text" 
-                        class="form-control"
-                        ngModel
-                        #placa="ngModel"
-                        name="placa" 
-                        id="placa" 
-                        required
-                        [maxlength]="6">
-                </div>
-                <div class="form-group col-lg-4">
-                    <label class="label-black" for="marca">Marca</label>
-                    <input 
-                        type="text" 
-                        class="form-control"
-                        ngModel
-                        #marca="ngModel"
-                        name="marca" 
-                        id="marca" 
-                        required
-                        [maxlength]="15"
-                        (keypress)="onlyText($event)">
-                </div>
-                <div class="form-group col-lg-4">
-                    <label class="label-black" for="modelo">Modelo</label>
-                    <input 
-                        type="text" 
-                        class="form-control"
-                        ngModel
-                        #modelo="ngModel"
-                        name="modelo" 
-                        id="modelo" 
-                        required
-                        [maxlength]="4"
-                        (keypress)="onlyNumbers($event)">
-                </div>
-                <div class="form-group col-lg-3">
-                    <label class="label-black" for="color">Color</label>
-                    <input 
-                        type="text" 
-                        class="form-control"
-                        ngModel
-                        #color="ngModel"
-                        name="color" 
-                        id="color" 
-                        required
-                        [maxlength]="10"
-                        (keypress)="onlyText($event)">
-                </div>
-                <div class="form-group col-lg-4">
-                    <label class="label-black" for="color">Línea</label>
-                    <input 
-                        type="text" 
-                        class="form-control"
-                        ngModel
-                        #linea="ngModel"
-                        name="linea" 
-                        id="linea" 
-                        required
-                        [maxlength]="10"
-                        (keypress)="onlyText($event)">
-                </div>
-                <div class="form-group col-lg-5">
-                    <label class="label-black" for="chasis">Chasis</label>
-                    <input 
-                        type="text" 
-                        class="form-control"
-                        ngModel
-                        #chasis="ngModel"
-                        name="chasis" 
-                        id="chasis" 
-                        required
-                        [maxlength]="20">
-                </div>
-                <div class="form-group col-lg-2">
-                    <label class="label-black" for="pasajeros">Pasajeros</label>
-                    <input 
-                        type="text" 
-                        class="form-control"
-                        ngModel
-                        #pasajeros="ngModel"
-                        name="pasajeros" 
-                        id="pasajeros" 
-                        required
-                        [maxlength]="2"
-                        (keypress)="onlyNumbers($event)">
-                </div>
-                <div class="form-group col-lg-5">
-                    <label class="label-black" for="carroceria">Carroceria</label>
-                    <input 
-                        type="text" 
-                        class="form-control"
-                        ngModel
-                        #carroceria="ngModel"
-                        name="carroceria" 
-                        id="carroceria" 
-                        required
-                        [maxlength]="20">
-                </div>
-                <div class="form-group col-lg-5">
-                    <label class="label-black" for="motor">Motor</label>
-                    <input 
-                        type="text" 
-                        class="form-control"
-                        ngModel
-                        #motor="ngModel"
-                        name="motor" 
-                        id="motor" 
-                        required
-                        [maxlength]="30">
-                </div>
-                <div class="form-group col-lg-5">
-                    <label class="label-black" for="cilindraje">Cilindraje</label>
-                    <input 
-                        type="text" 
-                        class="form-control"
-                        ngModel
-                        #cilindraje="ngModel"
-                        name="cilindraje" 
-                        id="cilindraje" 
-                        required
-                        [maxlength]="7">
-                </div>
-                <div class="form-group col-lg-5">
-                    <label class="label-black" for="licencia">Licencia</label>
-                    <input 
-                        type="text" 
-                        class="form-control"
-                        ngModel
-                        #licencia="ngModel"
-                        name="licencia" 
-                        id="licencia" 
-                        required
-                        [maxlength]="20">
-                </div>
-                <button [ladda]="isLoading" type="submit" class="btn btn-primary" style="margin-left: 15px;" [disabled]="!formRegisterTaxi.valid">Registrar</button>
-            </bs-modal-body>
-            </form>
-    </bs-modal>
-    <bs-modal #modalEditPropietario [keyboard]="false" [backdrop]="'static'">
-        <form #formEdit="ngForm" (ngSubmit)="onSubmitEdit(formEdit)">
+        </div>
+        <bs-modal #modalRegisterPropietario [keyboard]="false" [backdrop]="'static'">
+            <form #formRegister="ngForm" (ngSubmit)="onSubmitRegister(formRegister)">
                 <bs-modal-header [showDismiss]="true">
-                    <h4 class="modal-title" style="color: #000000;">Editar información propietario</h4>
+                        <h4 class="modal-title" style="color: #000000;">Registrar Nuevo Propietario</h4>
                 </bs-modal-header>
                 <bs-modal-body>
                     <div class="form-group col-lg-12">
@@ -433,8 +106,10 @@
                         <input 
                             type="text" 
                             class="form-control"
-                            [(ngModel)]="documento_select"
-                            name="documento_select"
+                            ngModel
+                            #documento="ngModel"
+                            name="documento" 
+                            id="documento" 
                             required
                             [maxlength]="10"
                             (keypress)="onlyNumbers($event)">
@@ -444,8 +119,10 @@
                         <input 
                             type="text" 
                             class="form-control" 
-                            [(ngModel)]="nombres_select"
-                            name="nombres_select"
+                            ngModel
+                            #nombres="ngModel"
+                            name="nombres"
+                            id="nombres"
                             required
                             [maxlength]="30"
                             (keypress)="onlyText($event)">
@@ -455,8 +132,10 @@
                         <input 
                             type="text" 
                             class="form-control" 
-                            [(ngModel)]="apellidos_select"
-                            name="apellidos_select"
+                            ngModel
+                            #apellidos="ngModel"
+                            name="apellidos" 
+                            id="apellidos"
                             required
                             [maxlength]="30"
                             (keypress)="onlyText($event)">
@@ -466,8 +145,10 @@
                         <input 
                             type="text"
                             class="form-control"
-                            [(ngModel)]="direccion_select"
-                            name="direccion_select"
+                            ngModel
+                            #direccion="ngModel"
+                            name="direccion"
+                            id="direccion"
                             required
                             [maxlength]="15">
                     </div>
@@ -475,8 +156,10 @@
                         <label class="label-black" for="Departamento">Departamento</label>
                         <select 
                             class="form-control" 
-                            [(ngModel)]="departamento_select"
-                            name="departamento_select"
+                            name="departamento"
+                            id="departamento"
+                            ngModel
+                            #departamento="ngModel"
                             required
                             (change)="onChange($event.target.value)">
                             <option *ngFor="let dpt of lista_departamentos" value="{{dpt}}">{{dpt}}</option>
@@ -486,8 +169,10 @@
                         <label class="label-black" for="municipio">Municipio</label>
                         <select 
                             class="form-control" 
-                            [(ngModel)]="municipio_select"
-                            name="municipio_select"
+                            name="municipio"
+                            id="municipio"
+                            ngModel
+                            #municipio="ngModel"
                             required>
                             <option *ngFor="let mnp of lista_municipios" value="{{mnp}}">{{mnp}}</option>
                         </select>
@@ -497,33 +182,348 @@
                         <input 
                             type="text"
                             class="form-control"
-                            [(ngModel)]="telefono_select"
-                            name="telefono_select"
+                            ngModel
+                            #telefono="ngModel"
+                            name="telefono"
+                            id="telefono"
                             required
                             [maxlength]="10"
                             (keypress)="onlyNumbers($event)">
                     </div>
-                    <div class="form-group col-lg-5">
+                    <div class="form-group col-lg-4">
                         <label class="label-black" for="Departamento">Fecha de Nacimiento</label>
                         <input 
                             type="date"
                             class="form-control"
-                            [(ngModel)]="fecha_cumpleanos_select"
-                            name="fecha_cumpleanos_select"
+                            ngModel
+                            #fechanacimiento="ngModel"
+                            name="fechanacimiento"
+                            id="fechanacimiento"
                             required>
                     </div>
-                    <div class="form-group col-lg-3">
+                    <div class="form-group col-lg-4">
                         <label class="label-black" for="vial">Vial</label>
                         <input 
                             type="text" 
                             class="form-control" 
-                            [(ngModel)]="vial_select"
-                            name="vial_select"
+                            ngModel
+                            #vial="ngModel"
+                            name="vial" 
+                            id="vial"
                             required>
                     </div>
-                    <button [ladda]="isLoading" type="submit" class="btn btn-primary" [disabled]="!formEdit.valid" style="margin-left: 15px;">Actualizar</button>
+                    <button [ladda]="isLoading" type="submit" class="btn btn-primary" style="margin-left: 15px;" [disabled]="!formRegister.valid">Registrar</button>
                 </bs-modal-body>
             </form>
-    </bs-modal>
-    <simple-notifications [options]="options" ></simple-notifications>
-</div>
+        </bs-modal>
+        <bs-modal #modalListTaxis [keyboard]="false" [backdrop]="'static'">
+            <bs-modal-header [showDismiss]="true">
+                <h4 class="modal-title" style="color: #000000;">
+                    {{str_propietario}} - TAXIS
+                </h4>
+            </bs-modal-header>
+            <bs-modal-body>
+                <div class="row">
+                    <div *ngIf="lista_vehiculos_propietario.length !== 0 else elseBlock">
+                        <div class="col-lg-12">
+                            <table class="table">
+                                <thead style="color: #000000;">
+                                    <tr>
+                                        <th class="text-center">Placa</th>
+                                        <th class="text-center">Marca</th>
+                                        <th class="text-center">Modelo</th>
+                                        <th class="text-center">Línea</th>
+                                        <th class="text-center">Color</th>
+                                        <th class="text-center">Pasajeros</th>
+                                        <th class="text-center">Carroceria</th>
+                                        <th class="text-center">Motor</th>
+                                        <th class="text-center">Licencia</th>
+                                    </tr>
+                                </thead>
+                                <tbody style="color: #000000;">
+                                    <tr *ngFor="let item of lista_vehiculos_propietario">
+                                        <td class="text-center">{{item.placa | uppercase}}</td>
+                                        <td class="text-center">{{item.marca | uppercase}}</td>
+                                        <td class="text-center">{{item.modelo}}</td>
+                                        <td class="text-center">{{item.linea | uppercase}}</td>
+                                        <td class="text-center">{{item.color | uppercase}}</td>
+                                        <td class="text-center">{{item.pasajeros}}</td>
+                                        <td class="text-center">{{item.carroceria | uppercase}}</td>
+                                        <td class="text-center">{{item.motor | uppercase}}</td>
+                                        <td class="text-center">{{item.numero_licencia | uppercase}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <ng-template #elseBlock>
+                        <div class="header text-center">
+                            <div class="circle" style="margin: auto;">
+                                <div class="taxi-img-bg" style="margin: auto;margin-top: auto"></div>
+                            </div>
+                            <h3 style="color: #000000;">{{str_propietario}}, no tiene taxis registrados</h3>
+                        </div>
+                    </ng-template>
+                </div>
+            </bs-modal-body>
+        </bs-modal>
+        <bs-modal #modalRegisterTaxi [keyboard]="false" [backdrop]="'static'">
+            <form #formRegisterTaxi="ngForm" (ngSubmit)="onSubmitRegisterTaxi(formRegisterTaxi)">
+                <bs-modal-header [showDismiss]="true">
+                    <h4 class="modal-title" style="color: #000000;">Registar Nuevo Vehículo</h4>
+                </bs-modal-header>
+                <bs-modal-body>
+                    <div class="form-group col-lg-12">
+                        <label class="label-black" for="documento">Documento Propietario</label>
+                        <input
+                            type="text" 
+                            class="form-control"
+                            value="{{documento_select}}"
+                            readonly>
+                    </div>
+                    <div class="form-group col-lg-4">
+                        <label class="label-black" for="placa">Placa</label>
+                        <input 
+                            type="text" 
+                            class="form-control"
+                            ngModel
+                            #placa="ngModel"
+                            name="placa" 
+                            id="placa" 
+                            required
+                            [maxlength]="6">
+                    </div>
+                    <div class="form-group col-lg-4">
+                        <label class="label-black" for="marca">Marca</label>
+                        <input 
+                            type="text" 
+                            class="form-control"
+                            ngModel
+                            #marca="ngModel"
+                            name="marca" 
+                            id="marca" 
+                            required
+                            [maxlength]="15"
+                            (keypress)="onlyText($event)">
+                    </div>
+                    <div class="form-group col-lg-4">
+                        <label class="label-black" for="modelo">Modelo</label>
+                        <input 
+                            type="text" 
+                            class="form-control"
+                            ngModel
+                            #modelo="ngModel"
+                            name="modelo" 
+                            id="modelo" 
+                            required
+                            [maxlength]="4"
+                            (keypress)="onlyNumbers($event)">
+                    </div>
+                    <div class="form-group col-lg-3">
+                        <label class="label-black" for="color">Color</label>
+                        <input 
+                            type="text" 
+                            class="form-control"
+                            ngModel
+                            #color="ngModel"
+                            name="color" 
+                            id="color" 
+                            required
+                            [maxlength]="10"
+                            (keypress)="onlyText($event)">
+                    </div>
+                    <div class="form-group col-lg-4">
+                        <label class="label-black" for="color">Línea</label>
+                        <input 
+                            type="text" 
+                            class="form-control"
+                            ngModel
+                            #linea="ngModel"
+                            name="linea" 
+                            id="linea" 
+                            required
+                            [maxlength]="10"
+                            (keypress)="onlyText($event)">
+                    </div>
+                    <div class="form-group col-lg-5">
+                        <label class="label-black" for="chasis">Chasis</label>
+                        <input 
+                            type="text" 
+                            class="form-control"
+                            ngModel
+                            #chasis="ngModel"
+                            name="chasis" 
+                            id="chasis" 
+                            required
+                            [maxlength]="20">
+                    </div>
+                    <div class="form-group col-lg-2">
+                        <label class="label-black" for="pasajeros">Pasajeros</label>
+                        <input 
+                            type="text" 
+                            class="form-control"
+                            ngModel
+                            #pasajeros="ngModel"
+                            name="pasajeros" 
+                            id="pasajeros" 
+                            required
+                            [maxlength]="2"
+                            (keypress)="onlyNumbers($event)">
+                    </div>
+                    <div class="form-group col-lg-5">
+                        <label class="label-black" for="carroceria">Carroceria</label>
+                        <input 
+                            type="text" 
+                            class="form-control"
+                            ngModel
+                            #carroceria="ngModel"
+                            name="carroceria" 
+                            id="carroceria" 
+                            required
+                            [maxlength]="20">
+                    </div>
+                    <div class="form-group col-lg-5">
+                        <label class="label-black" for="motor">Motor</label>
+                        <input 
+                            type="text" 
+                            class="form-control"
+                            ngModel
+                            #motor="ngModel"
+                            name="motor" 
+                            id="motor" 
+                            required
+                            [maxlength]="30">
+                    </div>
+                    <div class="form-group col-lg-5">
+                        <label class="label-black" for="cilindraje">Cilindraje</label>
+                        <input 
+                            type="text" 
+                            class="form-control"
+                            ngModel
+                            #cilindraje="ngModel"
+                            name="cilindraje" 
+                            id="cilindraje" 
+                            required
+                            [maxlength]="7">
+                    </div>
+                    <div class="form-group col-lg-5">
+                        <label class="label-black" for="licencia">Licencia</label>
+                        <input 
+                            type="text" 
+                            class="form-control"
+                            ngModel
+                            #licencia="ngModel"
+                            name="licencia" 
+                            id="licencia" 
+                            required
+                            [maxlength]="20">
+                    </div>
+                    <button [ladda]="isLoading" type="submit" class="btn btn-primary" style="margin-left: 15px;" [disabled]="!formRegisterTaxi.valid">Registrar</button>
+                </bs-modal-body>
+                </form>
+        </bs-modal>
+        <bs-modal #modalEditPropietario [keyboard]="false" [backdrop]="'static'">
+            <form #formEdit="ngForm" (ngSubmit)="onSubmitEdit(formEdit)">
+                    <bs-modal-header [showDismiss]="true">
+                        <h4 class="modal-title" style="color: #000000;">Editar información propietario</h4>
+                    </bs-modal-header>
+                    <bs-modal-body>
+                        <div class="form-group col-lg-12">
+                            <label class="label-black" for="documento">N° Documento</label>
+                            <input 
+                                type="text" 
+                                class="form-control"
+                                [(ngModel)]="documento_select"
+                                name="documento_select"
+                                required
+                                [maxlength]="10"
+                                (keypress)="onlyNumbers($event)">
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label class="label-black" for="nombres">Nombres</label>
+                            <input 
+                                type="text" 
+                                class="form-control" 
+                                [(ngModel)]="nombres_select"
+                                name="nombres_select"
+                                required
+                                [maxlength]="30"
+                                (keypress)="onlyText($event)">
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label class="label-black" for="apellidos">Apellidos</label>
+                            <input 
+                                type="text" 
+                                class="form-control" 
+                                [(ngModel)]="apellidos_select"
+                                name="apellidos_select"
+                                required
+                                [maxlength]="30"
+                                (keypress)="onlyText($event)">
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <label class="label-black" for="direccion">Dirección</label>
+                            <input 
+                                type="text"
+                                class="form-control"
+                                [(ngModel)]="direccion_select"
+                                name="direccion_select"
+                                required
+                                [maxlength]="15">
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <label class="label-black" for="Departamento">Departamento</label>
+                            <select 
+                                class="form-control" 
+                                [(ngModel)]="departamento_select"
+                                name="departamento_select"
+                                required
+                                (change)="onChange($event.target.value)">
+                                <option *ngFor="let dpt of lista_departamentos" value="{{dpt}}">{{dpt}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <label class="label-black" for="municipio">Municipio</label>
+                            <select 
+                                class="form-control" 
+                                [(ngModel)]="municipio_select"
+                                name="municipio_select"
+                                required>
+                                <option *ngFor="let mnp of lista_municipios" value="{{mnp}}">{{mnp}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <label class="label-black" for="Telefono">Telefono</label>
+                            <input 
+                                type="text"
+                                class="form-control"
+                                [(ngModel)]="telefono_select"
+                                name="telefono_select"
+                                required
+                                [maxlength]="10"
+                                (keypress)="onlyNumbers($event)">
+                        </div>
+                        <div class="form-group col-lg-5">
+                            <label class="label-black" for="Departamento">Fecha de Nacimiento</label>
+                            <input 
+                                type="date"
+                                class="form-control"
+                                [(ngModel)]="fecha_cumpleanos_select"
+                                name="fecha_cumpleanos_select"
+                                required>
+                        </div>
+                        <div class="form-group col-lg-3">
+                            <label class="label-black" for="vial">Vial</label>
+                            <input 
+                                type="text" 
+                                class="form-control" 
+                                [(ngModel)]="vial_select"
+                                name="vial_select"
+                                required>
+                        </div>
+                        <button [ladda]="isLoading" type="submit" class="btn btn-primary" [disabled]="!formEdit.valid" style="margin-left: 15px;">Actualizar</button>
+                    </bs-modal-body>
+                </form>
+        </bs-modal>
+        <simple-notifications [options]="options" ></simple-notifications>
+    </div>

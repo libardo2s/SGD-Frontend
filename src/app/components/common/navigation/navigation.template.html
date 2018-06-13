@@ -32,14 +32,14 @@
                     </li>
                 </ul>
             </li>
-            <li [ngClass]="{active: activeRoute('vinculacion')}">
-                <a [routerLink]="['/vinculacion']"><i class="fa fa-file-text" style="font-size: 16px;"></i> <span class="nav-label">Vinculación</span></a>
-            </li>
             <li [ngClass]="{active: activeRoute('taxista')}">
                 <a [routerLink]="['/taxista']"><i class="fa fa-taxi" style="font-size: 16px;"></i> <span class="nav-label">Gestión Taxistas</span></a>
             </li>
             <li [ngClass]="{active: activeRoute('empleado')}">
                 <a [routerLink]="['/empleado']"><i class="fa fa-users" style="font-size: 16px;"></i> <span class="nav-label">Gestión Humana</span></a>
+            </li>
+            <li [ngClass]="{active: activeRoute('vinculacion')}">
+                <a [routerLink]="['/vinculacion']"><i class="fa fa-file-text" style="font-size: 16px;"></i> <span class="nav-label">Vinculación Vehículos</span></a>
             </li>
         </ul>
     </div>

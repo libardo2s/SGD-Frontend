@@ -8636,6 +8636,15 @@ fieldset[disabled] .btn-primary.active {
   color: #FFFB40;
 }
 
+.drive-img-bg {
+  background: url("patterns/driver.png") no-repeat;
+  background-size: cover;
+  width: 50px;
+  height: 50px;
+  position: relative;
+  top: 10px;
+}
+
 .warning-img-bg {
   background: url("patterns/user.png") no-repeat;
   background-size: cover;

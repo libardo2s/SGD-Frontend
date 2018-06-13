@@ -28,14 +28,17 @@ export class vinculacionViewComponent implements OnInit {
     shoInfo: boolean;
     vehiculo: any;
     title: string;
+    title_doc: string;
     url: string;
+    urlImage: string;
     private headers: Headers;
     id_vinculacion: number;
     type: number;
     vinculacionSelect: any;
 
     optionsNotifications = {
-        position: ['top', 'rigth'],
+        position: ['top', 'right'],
+        timeOut: 5000,
         lastOnBottom: true
     }
 
@@ -203,6 +206,13 @@ export class vinculacionViewComponent implements OnInit {
         this.modalDocumentos.open('lg');
     }
 
+    openModalImage(url, title){
+        this.title_doc = title;
+        this.urlImage = url;
+        // console.log(this.urlImage);
+        this.modalImagenes.open('lg');
+    }
+
     onBeforeUpload = (metadata: UploadMetadata) => {
         let data;
         switch(this.type){
@@ -314,6 +324,4 @@ export class vinculacionViewComponent implements OnInit {
         }
         return valid;
     }
-
-    
 }
