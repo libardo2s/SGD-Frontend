@@ -32,6 +32,7 @@ export class vinculacionViewComponent implements OnInit {
     private headers: Headers;
     id_vinculacion: number;
     type: number;
+    vinculacionSelect: any;
 
     optionsNotifications = {
         position: ['top', 'rigth'],
@@ -53,6 +54,12 @@ export class vinculacionViewComponent implements OnInit {
 
     @ViewChild('modalGenerarVinculacion')
     modalVinculacion: BsModalComponent;
+
+    @ViewChild('modalDocumentos')
+    modalDocumentos: BsModalComponent;
+
+    @ViewChild('modalImagenes')
+    modalImagenes: BsModalComponent;
     //MODALS 
 
     constructor(
@@ -184,6 +191,18 @@ export class vinculacionViewComponent implements OnInit {
         this.modalVinculacionDocumentos.open('lg');
     }
 
+    openModalDocumentos(vinculacion) {
+        this.title = vinculacion.vehiculo.placa;
+        this.vinculacionSelect = vinculacion;
+        this.vinculacionSelect.saot_valid = this.validateData(this.vinculacionSelect.fecha_vencimiento_soat);
+        this.vinculacionSelect.tecno_valid = this.validateData(this.vinculacionSelect.fecha_vencimiento_tecnomecanica);
+        this.vinculacionSelect.targeta_valid = this.validateData(this.vinculacionSelect.fecha_vencimiento_targeta_operacion);
+        this.vinculacionSelect.seguro_valid = this.validateData(this.vinculacionSelect.fecha_vencimiento_seguro_accidente);
+        this.vinculacionSelect.contra_valid = this.validateData(this.vinculacionSelect.fecha_vencimiento_seguro_contractual);
+        this.vinculacionSelect.extra_valid = this.validateData(this.vinculacionSelect.fecha_vencimiento_seguro_extracontractual);
+        this.modalDocumentos.open('lg');
+    }
+
     onBeforeUpload = (metadata: UploadMetadata) => {
         let data;
         switch(this.type){
@@ -283,4 +302,18 @@ export class vinculacionViewComponent implements OnInit {
             this.showAlertError(response.message);
         }
     };
+
+    validateData(date){
+        let valid = false;
+        let date1 = new Date(date);
+        let date2 = new Date();
+        let timeDiff = date1.getTime() - date2.getTime();
+        let diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
+        if (diffDays > 0) {
+            valid = true;
+        }
+        return valid;
+    }
+
+    
 }
