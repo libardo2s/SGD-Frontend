@@ -78,7 +78,6 @@ export class vinculacionViewComponent implements OnInit {
         .subscribe( result=> {
             if(result.isOk) {
                 this.lista_vinculaciones = result.content;
-                // console.log(result)
             }else {
                 this.showAlertError(result.message);
             }
