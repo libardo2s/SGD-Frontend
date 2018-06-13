@@ -55,7 +55,7 @@
                                 <td class="text-center">{{item.vehiculo.placa | uppercase}}</td>
                                 <td class="text-center">{{item.fecha_vinculacion}}</td>
                                 <td class="td-actions text-center">
-                                    <a href="javascript:;" (click)="modalNuevaVinculacion.open()" rel="tooltip" title="Ver documentos" class="btn btn-success btn-xs" data-original-title="View Profile">
+                                    <a href="javascript:;" (click)="openModalDocumentos(item)" rel="tooltip" title="Ver documentos" class="btn btn-success btn-xs" data-original-title="View Profile">
                                         <i class="fa fa-eye"></i>
                                     </a>
                                     <a href="javascript:;" (click)="openModalDocumentosVinculacion(item.vehiculo.placa, item.id)" rel="tooltip" title="Agregar actualizar documentos" class="btn btn-success btn-xs" data-original-title="View Profile">
@@ -90,7 +90,7 @@
     <bs-modal #modalNuevaVinculacion [keyboard]="false" [backdrop]="'static'">
         <form #formVinculacion="ngForm" (ngSubmit)="onSubmitRegisterVinculacion(formVinculacion)">
             <bs-modal-header [showDismiss]="true">
-                    <h4 class="modal-title" style="color: #000000;">Actualizar Documentos -- {{title | uppercase}}</h4>
+                <h4 class="modal-title" style="color: #000000;">Actualizar Documentos -- {{title | uppercase}}</h4>
             </bs-modal-header>
             <bs-modal-body>
                 <div class="row">
@@ -309,6 +309,91 @@
                 <div class="double-bounce2"></div>
             </div>
         </spinner-component>
+    </bs-modal>
+    <bs-modal #modalDocumentos [keyboard]="false" [backdrop]="'static'">
+        <bs-modal-header [showDismiss]="true">
+            <h4 class="modal-title" style="color: #000000;">Documentos -- {{title | uppercase}}</h4>
+        </bs-modal-header>
+        <bs-modal-body style="background: #f3f3f4">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="col-lg-3 form-group" style="color: #000000;">
+                        <label>SOAT</label>
+                        <p style="margin: 0px;"><label>Fecha vencimiento</label></p>
+                        <p>
+                            <label 
+                            class="label"
+                            [ngClass]="{'label-primary': vinculacionSelect?.saot_valid, 'label-danger': !vinculacionSelect?.saot_valid}"
+                            >{{vinculacionSelect?.fecha_vencimiento_soat}}</label>
+                            <button type="button" class="btn btn-primary btn-xs">Ver</button>
+                        </p>
+                    </div>
+                    <div class="col-lg-3 form-group" style="color: #000000;">
+                        <label>Tecnomecánica</label>
+                        <p style="margin: 0px;"><label>Fecha vencimiento</label></p>
+                        <p>
+                            <label                             
+                            class="label"
+                            [ngClass]="{'label-primary': vinculacionSelect?.tecno_valid, 'label-danger': !vinculacionSelect?.tecno_valid}">
+                            {{vinculacionSelect?.fecha_vencimiento_tecnomecanica}}</label>
+                            <button type="button" class="btn btn-primary btn-xs">Ver</button>
+                        </p>
+                    </div>
+                    <div class="col-lg-3 form-group" style="color: #000000;">
+                        <label>Targeta de operación</label>
+                        <p style="margin: 0px;"><label>Fecha vencimiento</label></p>
+                        <p>
+                            <label class="label"
+                            [ngClass]="{'label-primary': vinculacionSelect?.targeta_valid, 'label-danger': !vinculacionSelect?.targeta_valid}">
+                            {{vinculacionSelect?.fecha_vencimiento_targeta_operacion}}</label>
+                            <button type="button" class="btn btn-primary btn-xs">Ver</button>
+                        </p>
+                    </div>
+                    <div class="col-lg-3 form-group" style="color: #000000;">
+                        <label>Seguro accidentes</label>
+                        <p style="margin: 0px;"><label>Fecha vencimiento</label></p>
+                        <p>
+                            <label class="label"
+                            [ngClass]="{'label-primary': vinculacionSelect?.seguro_valid, 'label-danger': !vinculacionSelect?.seguro_valid}">
+                            {{vinculacionSelect?.fecha_vencimiento_seguro_accidente}}</label>
+                            <button type="button" class="btn btn-primary btn-xs">Ver</button>
+                        </p>
+                    </div>
+                    <div class="col-lg-3 form-group" style="color: #000000;">
+                        <label>Seguro contractual</label>
+                        <p style="margin: 0px;"><label>Fecha vencimiento</label></p>
+                        <p>
+                            <label class="label"
+                            [ngClass]="{'label-primary': vinculacionSelect?.contra_valid, 'label-danger': !vinculacionSelect?.contra_valid}">
+                            {{vinculacionSelect?.fecha_vencimiento_seguro_contractual}}</label>
+                            <button type="button" class="btn btn-primary btn-xs">Ver</button>
+                        </p>
+                    </div>
+                    <div class="col-lg-3 form-group" style="color: #000000;">
+                        <label>Seguro extracontractual</label>
+                        <p style="margin: 0px;"><label>Fecha vencimiento</label></p>
+                        <p>
+                            <label class="label"
+                            [ngClass]="{'label-primary': vinculacionSelect?.extra_valid, 'label-danger': !vinculacionSelect?.extra_valid}">
+                            {{vinculacionSelect?.fecha_vencimiento_seguro_extracontractual}}</label>
+                            <button type="button" class="btn btn-primary btn-xs">Ver</button>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </bs-modal-body>
+    </bs-modal>
+    <bs-modal #modalImagenes [keyboard]="false" [backdrop]="'static'">
+        <bs-modal-header [showDismiss]="true">
+            <h4 class="modal-title" style="color: #000000;">Vinculación</h4>
+        </bs-modal-header>
+        <bs-modal-body style="background: #f3f3f4">
+            <div class="row">
+                <div class="col-lg-12">
+                    
+                </div>
+            </div>
+        </bs-modal-body>
     </bs-modal>
     <simple-notifications [options]="options" ></simple-notifications>
 </div>
